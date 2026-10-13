@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', var(--font-sans);
+
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+
+  --color-surface-950: #0c0f0d;
+  --color-surface-900: #121916;
+  --color-surface-800: #1a221e;
+  --color-surface-700: #243029;
+  --color-cream: #f5f0e8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-svh overflow-x-hidden bg-surface-950 font-sans text-stone-300 antialiased;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  ::selection {
+    @apply bg-brand-500/35 text-white;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-300 via-emerald-200 to-accent-400 bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .text-gradient {
+      animation: gradient-shift 6s ease-in-out infinite;
+    }
+
+    .animate-mesh {
+      animation: mesh-drift 10s ease-in-out infinite;
+    }
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl;
+  }
+
+  .glass-strong {
+    @apply border border-white/12 bg-surface-900/75 backdrop-blur-2xl;
+  }
+
+  .glow-ring {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.07),
+      0 0 48px -14px rgba(16, 185, 129, 0.45);
+  }
+
+  .mesh-bg {
+    background-image:
+      radial-gradient(at 15% 20%, rgba(16, 185, 129, 0.2) 0, transparent 52%),
+      radial-gradient(at 85% 15%, rgba(249, 115, 22, 0.14) 0, transparent 48%),
+      radial-gradient(at 50% 90%, rgba(52, 211, 153, 0.1) 0, transparent 42%);
+  }
+
+  .card-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.07) 50%,
+      transparent 60%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+
+  @media (hover: hover) {
+    .card-shine:hover::after {
+      transform: translateX(120%);
+    }
+  }
+
+  .nav-link {
+    @apply transition duration-300 hover:text-white;
+  }
+
+  @media (hover: hover) {
+    .nav-link:hover {
+      transform: translateY(-1px);
+    }
+
+    .footer-link {
+      @apply inline-block transition duration-300;
+    }
+
+    .footer-link:hover {
+      transform: translateX(4px);
+      @apply text-brand-300;
+    }
+
+    .hover-glow-image {
+      @apply transition duration-500;
+    }
+
+    .hover-glow-image:hover {
+      box-shadow:
+        0 0 0 1px rgba(52, 211, 153, 0.25),
+        0 20px 40px -20px rgba(16, 185, 129, 0.45);
+    }
+  }
+
+  .icon-pop {
+    @apply transition duration-300;
+  }
+
+  @media (hover: hover) {
+    .group:hover .icon-pop {
+      transform: scale(1.12) rotate(-4deg);
+    }
+  }
+
+  .auth-input {
+    @apply shadow-inner shadow-black/20;
+  }
+
+  .auth-input:hover {
+    @apply border-white/20 bg-surface-900;
+  }
+
+  .auth-input:focus {
+    @apply border-brand-400/60 ring-2 ring-brand-500/25;
+  }
+
+  .auth-card {
+    @apply transition duration-500;
+  }
+
+  .auth-card:hover {
+    box-shadow:
+      0 0 0 1px rgba(52, 211, 153, 0.15),
+      0 24px 48px -24px rgba(16, 185, 129, 0.35);
+  }
+
+  .auth-submit {
+    @apply transition-transform duration-300 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .section-shell {
+    @apply scroll-mt-20 py-16 sm:scroll-mt-24 sm:py-20 md:py-24 lg:py-28;
+  }
+
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+
+  .responsive-banner-text {
+    @apply text-base leading-snug sm:text-xl md:text-2xl;
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+}
+
+@keyframes mesh-drift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.88;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .text-gradient {
+    animation: none;
+  }
+}
