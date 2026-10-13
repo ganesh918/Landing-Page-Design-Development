@@ -62,7 +62,7 @@ export function Pricing() {
           </span>
         </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
+        <div className="grid gap-6 overflow-visible pt-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch lg:gap-8 lg:pb-2">
           {pricingPlans.map((plan, index) => {
             const price =
               plan.monthlyPrice === 'Custom'
@@ -72,19 +72,23 @@ export function Pricing() {
                   : plan.monthlyPrice
 
             return (
-              <MotionCard key={plan.name} delay={index * 0.08} className="h-full">
+              <MotionCard
+                key={plan.name}
+                delay={index * 0.08}
+                className={`relative h-full ${plan.highlighted ? 'lg:scale-[1.03]' : ''}`}
+              >
+                {plan.highlighted && (
+                  <span className="pointer-events-none absolute -top-3 left-1/2 z-20 -translate-x-1/2 rounded-full bg-accent-500 px-3 py-0.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-accent-900/40">
+                    Best value
+                  </span>
+                )}
                 <article
                   className={`card-shine flex h-full flex-col rounded-2xl border p-6 transition sm:rounded-[1.75rem] sm:p-8 ${
                     plan.highlighted
-                      ? 'relative border-accent-400/45 bg-gradient-to-b from-accent-500/12 to-surface-900/95 shadow-xl hover:shadow-accent-900/25 md:col-span-2 lg:col-span-1 lg:scale-[1.03]'
+                      ? 'border-accent-400/45 bg-gradient-to-b from-accent-500/12 to-surface-900/95 shadow-xl hover:shadow-accent-900/25'
                       : 'glass-strong hover:border-brand-400/25 hover:shadow-lg hover:shadow-brand-900/15'
                   }`}
                 >
-                  {plan.highlighted && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent-500 px-3 py-0.5 text-xs font-semibold text-white">
-                      Best value
-                    </span>
-                  )}
                   <h3 className="font-display text-lg font-semibold text-white">{plan.name}</h3>
                   <p className="mt-2 text-sm text-stone-400">{plan.description}</p>
                   <div className="mt-6 flex items-baseline gap-1">
